@@ -7,11 +7,12 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   const { deploy, get, log } = deployments
   const { deployer } = await getNamedAccounts()
   const chainId = network.config.chainId
+  let ethUsdPriceFeedAddress
 
   
   let ethUsdPriceFeedAddress
   if(developementChains.includes(network.name)) {
-    const ethUsdAggregator = await get("MockV3Aggregator")
+    const ethUsdAggregator = await deployments.get("MockV3Aggregator")
     ethUsdPriceFeedAddress = ethUsdAggregator.address
   } else {
       ethUsdPriceFeedAddress = networkConfig[chainId]["ethUsdPriceFeed"]
