@@ -6,25 +6,50 @@ pragma solidity ^0.8.8;
 
 import "./PriceConverter.sol";
 
-error NotOwner();
+error FundMe__NotOwner();
 
+/**
+ * @title A contract for crowd funding
+ * @author Onowu Chris
+ * @notice This contract is to demo a sample funding contract
+ * @dev This implements price feegs as our library
+ */
 contract FundMe {
+    // Type declaration
     using PriceConverter for uint256;
 
-    uint256 public constant MINIMUM_USD = 50 * 1e18; // 1 * 10 ** 18
-
-    address[] public funders;
+    // State variables
     mapping(address => uint256 ) public addressToAmountFunded;
-
+    address[] public funders;
     address public immutable i_owner;
-
+    uint256 public constant MINIMUM_USD = 50 * 1e18; // 1 * 10 ** 18
     AggregatorV3Interface public priceFeed;
+
+    modifier onlyOwner() {
+        // require(i_owner == msg.sender, "Sender not owner");
+        if(i_owner != msg.sender) {revert FundMe__NotOwner();}
+        _;
+    }
 
     constructor(address priceFeedAddress) {
         i_owner = msg.sender;
         priceFeed = AggregatorV3Interface(priceFeedAddress);
     }
 
+
+    // modifier's are like guards that are ran before a function or variable it's modifying is evaluated
+    receive() external payable {
+        fund();
+    }
+
+    fallback() external payable {
+        fund();
+    }
+
+    /**
+     * @notice This function funds this contract
+     * @dev This implements price feegs as our library
+     */
     function fund() public payable {
         // Waant to be able to set a minimum fund amount in USD
         // 1. How do we send ETH to this contract ?
@@ -32,8 +57,6 @@ contract FundMe {
         addressToAmountFunded[msg.sender] += msg.value;
         funders.push(msg.sender);
     }
-    
-    
 
     function withdraw() public onlyOwner {
         /* startIndex; endIndex; steps*/
@@ -62,18 +85,5 @@ contract FundMe {
         (bool sendSuccess,/* bytes memory dataReturned */) = payable(msg.sender).call{value: address(this).balance}("");
         require(sendSuccess, "Call failed !!");
     }
-    // modifier's are like guards that are ran before a function or variable it's modifying is evaluated
-    modifier onlyOwner() {
-        // require(i_owner == msg.sender, "Sender not owner");
-        if(i_owner != msg.sender) {revert NotOwner();}
-        _;
-    }
 
-    receive() external payable {
-        fund();
-    }
-
-    fallback() external payable {
-        fund();
-    }
 }
