@@ -57,8 +57,8 @@ module.exports = {
     outputFile: 'gasReport.txt',
     noColors: true,
     currency: 'USD',
-    // coinmarketcap: COINMARKETCAP_API_KEY,
-    token: 'MATIC',
+    coinmarketcap: COINMARKETCAP_API_KEY,
+    token: 'ETH',
   },
   namedAccounts: {
     deployer: {
