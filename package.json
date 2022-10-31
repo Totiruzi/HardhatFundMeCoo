@@ -1,8 +1,8 @@
 {
   "name": "hardhat-fund-me-coo",
+  "author": "Onowu Chris",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "Chris Onowu",
   "license": "MIT",
   "devDependencies": {
     "@chainlink/contracts": "^0.4.2",
@@ -22,6 +22,14 @@
     "hardhat-gas-reporter": "^1.0.8",
     "solidity-coverage": "^0.7.21",
     "typechain": "^8.1.0"
+  },
+  "scripts": {
+    "test": "yarn hardhat test",
+    "test:staging": "yarn hardhat test --network rinkeby",
+    "lint": "yarn solhint 'contract/*.sol'",
+    "link:fix": "yarn solhint 'contract/*.sol' --fix",
+    "format": "yarn prettier --write .",
+    "coverage": "yarn hardhat coverage"
   },
   "dependencies": {
     "@nomiclabs/hardhat-waffle": "^2.0.3",

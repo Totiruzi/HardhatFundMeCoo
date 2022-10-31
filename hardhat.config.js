@@ -1,10 +1,10 @@
-require("@nomicfoundation/hardhat-toolbox");
+require("@nomicfoundation/hardhat-toolbox")
 require("@nomiclabs/hardhat-waffle")
 require("hardhat-gas-reporter")
 require("@nomiclabs/hardhat-etherscan")
 require("dotenv").config()
 require("solidity-coverage")
-require("hardhat-deploy");
+require("hardhat-deploy")
 
 /** @type import('hardhat/config').HardhatUserConfig */
 
@@ -22,31 +22,28 @@ const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || ""
 
 module.exports = {
   defaultNetwork: "hardhat",
-    networks: {
-      hardhat: {
-        chainId: 31337,
-        // gasPrice: 130000000000,
-      },
-      kovan: {
-        url: KOVAN_RPC_URL,
-        accounts: [PRIVATE_KEY],
-        chainId: 42,
-        blockConfirmations: 6,
-        gas: 6000000,
-      },
-      rinkeby: {
-        url: RINKEBY_RPC_URL,
-        accounts: [PRIVATE_KEY],
-        chainId: 4,
-        blockConfirmations: 6,
-      },
+  networks: {
+    hardhat: {
+      chainId: 31337,
+      // gasPrice: 130000000000,
     },
+    kovan: {
+      url: KOVAN_RPC_URL,
+      accounts: [PRIVATE_KEY],
+      chainId: 42,
+      blockConfirmations: 6,
+      gas: 6000000,
+    },
+    rinkeby: {
+      url: RINKEBY_RPC_URL,
+      accounts: [PRIVATE_KEY],
+      chainId: 4,
+      blockConfirmations: 6,
+    },
+  },
   // solidity: "0.8.8",
   solidity: {
-    compilers: [
-      { version: "0.8.8" },
-      { version: "0.6.6" }
-    ]
+    compilers: [{ version: "0.8.8" }, { version: "0.6.6" }],
   },
   defaultNetwork: "hardhat",
   etherscan: {
@@ -54,11 +51,11 @@ module.exports = {
   },
   gasReporter: {
     enabled: true,
-    outputFile: 'gasReport.txt',
+    outputFile: "gasReport.txt",
     noColors: true,
-    currency: 'USD',
+    currency: "USD",
     coinmarketcap: COINMARKETCAP_API_KEY,
-    token: 'ETH',
+    token: "ETH",
   },
   namedAccounts: {
     deployer: {
@@ -69,4 +66,4 @@ module.exports = {
       default: 1,
     },
   },
-};
+}
